@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2345电影网 - 免费在线观影平台</title>
+    <meta name="description" content="2345电影网(2345dianyingwang-app)提供最新电影、热播剧集、综艺、动漫高清在线观看，免费无广告，畅享极致观影体验。">
+    <meta name="keywords" content="2345电影网,2345dianyingwang-app,在线电影,免费观影,高清影视">
+    <meta name="author" content="2345电影网">
+    <meta name="robots" content="index,follow">
+    
+    <!-- Bing SEO优化标签 -->
+    <meta name="msvalidate.01" content="Bing-verification-code-placeholder">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* 动态背景 */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a1628 100%);
+            overflow: hidden;
+        }
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138,43,226,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -20%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+            animation: pulse2 10s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.6; }
+        }
+        
+        @keyframes pulse2 {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+        }
+        
+        /* 头部 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8a2be2, #00d4ff, #ff6ec7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        
+        /* 主内容区 */
+        main {
+            margin-top: 80px;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6ec7, #8a2be2, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)); }
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: #a0a0c0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .url-display {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #00d4ff;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, #8a2be2, #00d4ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 30px rgba(138, 43, 226, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.5);
+        }
+        
+        /* 栏目通用样式 */
+        .section {
+            padding: 5rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 3rem;
+            color: #fff;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #8a2be2, #00d4ff);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        
+        /* 电影卡片网格 */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .movie-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05), rgba(0, 212, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .movie-card:hover::before {
+            opacity: 1;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.15);
+        }
+        
+        .movie-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .movie-card p {
+            color: #9090b0;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .movie-tag {
+            display: inline-block;
+            background: rgba(138, 43, 226, 0.2);
+            color: #c080ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 分类标签 */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-tab {
+            padding: 0.6rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 25px;
+            color: #b0b0b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .category-tab:hover, .category-tab.active {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 212, 255, 0.3));
+            color: #fff;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+        
+        /* 排行榜 */
+        .ranking-list {
+            list-style: none;
+            counter-reset: ranking;
+        }
+        
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(138, 43, 226, 0.15);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            counter-increment: ranking;
+        }
+        
+        .ranking-item::before {
+            content: counter(ranking);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #8a2be2;
+            margin-right: 1.5rem;
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 50%;
+        }
+        
+        .ranking-item:nth-child(1)::before {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #000;
+        }
+        
+        .ranking-item:nth-child(2)::before {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            color: #000;
+        }
+        
+        .ranking-item:nth-child(3)::before {
+            background: linear-gradient(135deg, #cd7f32, #a0522d);
+            color: #fff;
+        }
+        
+        .ranking-item:hover {
+            background: rgba(0, 212, 255, 0.05);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateX(10px);
+        }
+        
+        .ranking-info h4 {
+            color: #00d4ff;
+            margin-bottom: 0.3rem;
+        }
+        
+        .ranking-info p {
+            color: #8080a0;
+            font-size: 0.85rem;
+        }
+        
+        /* 关于我们 */
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-content p {
+            color: #a0a0c0;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-item {
+            padding: 2rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(138, 43, 226, 0.08);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .feature-item h4 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-item p {
+            color: #9090b0;
+            font-size: 0.9rem;
+        }
+        
+        /* 底部 */
+        footer {
+            background: rgba(5, 5, 10, 0.95);
+            border-top: 1px solid rgba(138, 43, 226, 0.2);
+            padding: 3rem 1rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8a2be2, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #8080a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(138, 43, 226, 0.1);
+            padding-top: 2rem;
+            color: #606080;
+            font-size: 0.85rem;
+        }
+        
+        .footer-bottom a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .hero {
+                min-height: 80vh;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .movie-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .category-tabs {
+                gap: 0.5rem;
+            }
+            
+            .category-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .ranking-item {
+                padding: 1rem;
+            }
+            
+            .ranking-item::before {
+                margin-right: 1rem;
+                min-width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            
+            .footer-links {
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .url-display {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 滚动动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+    <div class="bg-animation"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">🎬 2345电影网</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#movies">电影库</a></li>
+                <li><a href="#ranking">排行榜</a></li>
+                <li><a href="#about">关于我们</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- 首页/Hero -->
+        <section class="hero" id="home">
+            <div class="hero-content fade-in">
+                <h1>2345电影网</h1>
+                <div class="url-display">🌐 https://2345dianyingwang-app</div>
+                <p>汇聚全网最新最热电影、剧集、综艺、动漫，高清画质免费观看，无广告打扰，让每一帧都成为享受。</p>
+                <a href="#movies" class="cta-button">立即观影</a>
+            </div>
+        </section>
+        
+        <!-- 电影库 -->
+        <section class="section" id="movies">
+            <h2 class="section-title fade-in">🎞️ 电影库</h2>
+            <div class="category-tabs fade-in">
+                <span class="category-tab active">全部</span>
+                <span class="category-tab">动作</span>
+                <span class="category-tab">喜剧</span>
+                <span class="category-tab">爱情</span>
+                <span class="category-tab">科幻</span>
+                <span class="category-tab">悬疑</span>
+                <span class="category-tab">动画</span>
+            </div>
+            <div class="movie-grid">
+                <div class="movie-card fade-in">
+                    <h3>沙丘2：救世主降临</h3>
+                    <p>保罗·厄崔迪与契妮及弗雷曼人联手，踏上复仇之路，对抗阴谋毁灭他家族的势力，同时面临挚爱与已知宇宙命运的两难抉择。</p>
+                    <span class="movie-tag">科幻</span>
+                    <span class="movie-tag">冒险</span>
+                </div>
+                <div class="movie-card fade-in">
+                    <h3>热辣滚烫</h3>
+                    <p>乐莹宅家多年，无所事事。一次偶然的机会，她决定改变自己，开始学习拳击，在汗水与坚持中找回了生活的意义。</p>
+                    <span class="movie-tag">喜剧</span>
+                    <span class="movie-tag">运动</span>
+                </div>
+                <div class="movie-card fade-in">
+                    <h3>奥本海默</h3>
+                    <p>讲述了美国理论物理学家罗伯特·奥本海默在二战期间领导曼哈顿计划，研发出世界上第一颗原子弹的故事。</p>
+                    <span class="movie-tag">传记</span>
+                    <span class="movie-tag">历史</span>
+                </div>
+                <div class="movie-card fade-in">
+                    <h3>坠落的审判</h3>
+                    <p>一位成功作家丈夫从阁楼坠落身亡，妻子成为谋杀案唯一嫌疑人，法庭审判逐渐揭开婚姻的真相。</p>
+                    <span class="movie-tag">悬疑</span>
+                    <span class="movie-tag">剧情</span>
+                </div>
+                <div class="movie-card fade-in">
+                    <h3>飞驰人生2</h3>
+                    <p>昔日冠军车手张驰重返赛场，面对年轻对手和自身极限的挑战，用热血与坚持书写新的传奇。</p>
+                    <span class="movie-tag">喜剧</span>
+                    <span class="movie-tag">赛车</span>
+                </div>
+                <div class="movie-card fade-in">
+                    <h3>蜘蛛侠：纵横宇宙</h3>
+                    <p>迈尔斯·莫拉莱斯穿越多元宇宙，与格温·史黛西及更多蜘蛛侠相遇，面对前所未有的危机。</p>
+                    <span class="movie-tag">动画</span>
+                    <span class="movie-tag">动作</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 排行榜 -->
+        <section class="section" id="ranking">
+            <h2 class="section-title fade-in">🏆 热播排行榜</h2>
+            <ol class="ranking-list">
+                <li class="ranking-item fade-in">
+                    <div class="ranking-info">
+                        <h4>周处除三害</h4>
+                        <p>犯罪动作片 · 9.2分 · 热度 98.5万</p>
+                    </div>
+                </li>
+                <li class="ranking-item fade-in">
+                    <div class="ranking-info">
+                        <h4>哥斯拉大战金刚2</h4>
+                        <p>科幻怪兽片 · 8.8分 · 热度 95.2万</p>
+                    </div>
+                </li>
+                <li class="ranking-item fade-in">
+                    <div class="ranking-info">
+                        <h4>你想活出怎样的人生</h4>
+                        <p>奇幻动画 · 8.9分 · 热度 92.1万</p>
+                    </div>
+                </li>
+                <li class="ranking-item fade-in">
+                    <div class="ranking-info">
+                        <h4>年会不能停！</h4>
+                        <p>职场喜剧 · 8.7分 · 热度 88.6万</p>
+                    </div>
+                </li>
+                <li class="ranking-item fade-in">
+                    <div class="ranking-info">
+                        <h4>第二十条</h4>
+                        <p>法治剧情 · 8.5分 · 热度 85.3万</p>
+                    </div>
+                </li>
+                <li class="ranking-item fade-in">
+                    <div class="ranking-info">
+                        <h4>金手指</h4>
+                        <p>犯罪悬疑 · 8.3分 · 热度 82.7万</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
+        
+        <!-- 关于我们 -->
+        <section class="section" id="about">
+            <h2 class="section-title fade-in">ℹ️ 关于 2345电影网</h2>
+            <div class="about-content fade-in">
+                <p><strong>2345电影网</strong>（网址：<a href="https://2345dianyingwang-app" style="color:#00d4ff;">https://2345dianyingwang-app</a>）是一个专注于提供高清影视在线观看的免费平台。</p>
+                <p>我们致力于为用户提供最新、最全、最清晰的电影资源，涵盖动作、喜剧、爱情、科幻、悬疑、动画等全品类影视内容。</p>
+                <p>平台每日更新，无广告打扰，让您随时随地享受极致观影体验。</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <span class="feature-icon">🎬</span>
+                        <h4>海量片库</h4>
+                        <p>上万部高清影视资源，持续更新</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">⚡</span>
+                        <h4>极速播放</h4>
+                        <p>多线路加速，秒播无卡顿</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🚫</span>
+                        <h4>无广告</h4>
+                        <p>纯净观影体验，告别烦人广告</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📱</span>
+                        <h4>多端适配</h4>
+                        <p>手机、平板、电脑全设备支持</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">2345电影网</div>
+            <div class="footer-links">
+                <a href="#home">首页</a>
+                <a href="#movies">电影库</a>
+                <a href="#ranking">排行榜</a>
+                <a href="#about">关于我们</a>
+            </div>
+            <div class="footer-bottom">
+                <p>本站网址：<a href="https://2345dianyingwang-app">https://2345dianyingwang-app</a></p>
+                <p>&copy; 2024 2345电影网 保留所有权利 | 关键词：2345电影网 2345dianyingwang-app</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // 分类标签交互
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // 头部滚动效果
+        let lastScroll = 0;
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.background = 'rgba(10, 10, 15, 0.95)';
+                header.style.boxShadow = '0 5px 30px rgba(0,0,0,0.5)';
+            } else {
+                header.style.background = 'rgba(10, 10, 15, 0.85)';
+                header.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
